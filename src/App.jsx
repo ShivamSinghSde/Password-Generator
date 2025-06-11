@@ -31,12 +31,13 @@ function App() {
       <div className= "w-full h-screen"
       style={{backgroundColor:"black"}}>
       <h1 className="text-white text-center pt-20 pb-10 text-3xl font-bold ">Passward Generator</h1>
-      <div className="text-center rounded-full " style={{backgroundColor:"grey"}}>
-        <input type="text" readOnly ref={passRef} className="text-red-500 my-4 text-3xl pb-2 px-2 " value={passward}
+      <div className="fixed flex flex-wrap justify-center inset-x-0 align-center">
+      <div className="text-center rounded-full px-15" style={{backgroundColor:"grey"}}>
+        <input type="text" readOnly ref={passRef} className="text-red-500  text-3xl my-4 p-2 rounded-sm" value={passward}
         style={{backgroundColor:"white"}}/>
         <button
         onClick = {copyPasswardClipboard}
-        className="text-3xl text-white cursor-pointer pb-2 px-3"
+        className="text-3xl text-white cursor-pointer p-2 px-3 text-center rounded-sm"
         style={{backgroundColor:"blue"}}>Copy</button>
         <div className="flex justify-center gap-2 pb-2 text-red" >
             <input type="range"
@@ -50,6 +51,7 @@ function App() {
             onChange={()=>{setCharacter((prev)=>!prev)}}
             /><label className="text-red-700 font-bold"> Character</label>
         </div>
+      </div>
       </div>
       </div>
     </>
