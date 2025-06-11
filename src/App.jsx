@@ -1,10 +1,11 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 
 function App() {
     const [length, setLength] = useState(8)
     const[number, setNumber] = useState(false)
     const [character, setCharacter] = useState(false)
     const [passward, setPassward]  = useState("")
+    const passRef = useRef(null)
     const passwardGenerator = useCallback(
     ()=>{
         let pass = ""
@@ -19,6 +20,11 @@ function App() {
         setPassward(pass)
     }, [length,number,character,setPassward])
     useEffect(()=>{passwardGenerator()},[length, number,character, setPassward])
+    const copyPasswardClipboard = useCallback(()=> {
+        passRef.current?.select()
+        window.navigator.clipboard.writeText(passward)
+    }, [passward])
+
 
   return (
     <>
@@ -26,13 +32,15 @@ function App() {
       style={{backgroundColor:"black"}}>
       <h1 className="text-white text-center pt-20 pb-10 text-3xl font-bold ">Passward Generator</h1>
       <div className="text-center rounded-full " style={{backgroundColor:"grey"}}>
-        <input type="text" readOnly className="text-red-500 my-4 text-3xl pb-2 px-2 " value={passward}
+        <input type="text" readOnly ref={passRef} className="text-red-500 my-4 text-3xl pb-2 px-2 " value={passward}
         style={{backgroundColor:"white"}}/>
-        <button className="text-3xl text-white cursor-pointer pb-2 px-3"
+        <button
+        onClick = {copyPasswardClipboard}
+        className="text-3xl text-white cursor-pointer pb-2 px-3"
         style={{backgroundColor:"blue"}}>Copy</button>
         <div className="flex justify-center gap-2 pb-2 text-red" >
             <input type="range"
-            min ={8} max={19} value={length} className="cursor-pointer"
+            min ={8} max={20} value={length} className="cursor-pointer"
              onChange={(e)=> setLength(e.target.value)}
              /><label className="text-red-700 font-bold"> Length : {length}</label>
             <input type="checkbox" className="cursor-pointer"
